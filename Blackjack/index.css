@@ -1,0 +1,21 @@
+body {
+    font-size:larger;
+    text-align: center;
+    background:green;
+}
+
+h1 {
+    color:goldenrod;
+}
+
+p {
+    color:white;
+}
+
+#message-el{
+    color:red;
+}
+
+#draw-button{
+    display: none;
+}

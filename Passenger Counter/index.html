@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <title>Passenger Counter</title>
+        <img id="station-pic" src="station.png">
+        <h1>Passenger Count: </h1>
+        <h1 id="p-counter">0</h1>
+        <button id="increment-btn" onclick="increment()" type="button">Add</button>
+        <button id="decrement-btn" onclick="decrement()" type="button">Subtract</button>
+        <button id="save-btn" onclick="save()">Save</button>
+        <button id="load-btn" onclick="load()">Load</button>
+        <button id="reset-btn" onclick="reset()">Reset</button> <br>
+        <p id="save-text">Save needed before loading</p>
+        <p id="saved-text">Saved successfully</p>
+        
+        <!-- Figure out why it works only when script is after the html code -->
+        <script src="index.js"></script>
+    </body>
+</html>

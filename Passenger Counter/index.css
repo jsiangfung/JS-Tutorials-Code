@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#save-text {
+    display: none;
+}
+
+#saved-text{
+    /* visibility: hidden; also works but it still affects layout where as display doesn't */
+    display: none;
+}
+
+#station-pic{
+    width: 300px;
+    height: 200px;
+}
+
