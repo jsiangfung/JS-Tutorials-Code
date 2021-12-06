@@ -6,16 +6,30 @@ let storedLinksEl = document.getElementById("saved-links");
 
 let storedLinks = [];
 
+
+//  restoreSavedLinks();
+//  printStoredLinks();    
+
 inputBtn.addEventListener("click", function(){
-    
+    saveLink();
+    //linkLocalStorage();
 });
 
 
 function saveLink(){
     let link = linkAdr.value; 
-    storedLinks.push(link);
+    storedLinks.push(link); 
     printStoredLinks();
 }
+
+// function linkLocalStorage(){
+//     localStorage.clear(); 
+//     localStorage.setItem("saved-links",  JSON.stringify(storedLinks));   
+// }
+
+// function restoreSavedLinks(){
+//     storedLinks = localStorage.getItem("saved-links");
+// }
 
 function printStoredLinks(){
     if(storedLinks.length != 0){
@@ -23,7 +37,7 @@ function printStoredLinks(){
         for(let i=0; i<storedLinks.length;i++){ 
             listItems += `
             <li>
-                <a id='saved-links'target='_blank' href='${storedLinks[i]}'> 
+                <a id='saved-links' target='_blank' href='${storedLinks[i]}'> 
                  ${storedLinks[i]} 
                 </a>
             </li>`;
@@ -36,5 +50,7 @@ function printStoredLinks(){
         storedLinksEl.innerHTML = listItems;
     }
 }
+
+
 
 
