@@ -2,6 +2,8 @@
 let linkAdr = document.getElementById("input-el");
 let text = document.getElementById("text");
 let inputBtn = document.getElementById("save-input-btn");
+let deleteBtn = document.getElementById("delete-link-btn");
+let deleteAllBtn = document.getElementById("delete-all-links-btn"); 
 let storedLinksEl = document.getElementById("saved-links");
 
 let storedLinks = [];
@@ -10,15 +12,33 @@ let storedLinks = [];
 formatSavedLinks(); 
 printStoredLinks(); 
  
+//Saves link to storage and updates history 
 inputBtn.addEventListener("click", function(){
     saveLink();
-    linkLocalStorage();
+    //linkLocalStorage();
 });
 
-//Saves current storedLinks to local storage on exit
+//Deletes most recent link in storage and updates history 
+deleteBtn.addEventListener("click", function(){
+    deleteLink(); 
+}); 
+
+//Deletes all links in storage and updates history
+deleteAllBtn.addEventListener("click", function(){
+    deleteAllLinks();
+}); 
+
+//Saves current storedLinks to local storage on exit/refresh 
+//TODO: Doesn't work as intended - doesn't call linkStorage() apparently since storage.clear() isn't happening
+window.addEventListener("reload", function(){
+    linkLocalStorage();
+})
+
 window.addEventListener("close", function(){
     linkLocalStorage();
 })
+
+
 
 //Saves link in input text field 
 function saveLink(){
@@ -29,7 +49,7 @@ function saveLink(){
 
 //Deletes most recent link from history - and updates storage
 function deleteLink(){
-    storedLinks.pop(); 
+    storedLinks.pop(); //TODO: Deletes most recent except for first entry for some reason 
     printStoredLinks(); 
     //linkLocalStorage();
 }
