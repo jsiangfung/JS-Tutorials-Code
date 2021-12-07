@@ -19,32 +19,26 @@ printStoredLinks();
 //Saves link to storage and updates history 
 inputBtn.addEventListener("click", function(){
     saveLink();
-    linkLocalStorage();
 });
 
 //Deletes most recent link in storage and updates history 
 deleteBtn.addEventListener("click", function(){
     deleteLink(); 
-    linkLocalStorage(); 
 }); 
 
 //Deletes all links in storage and updates history
 deleteAllBtn.addEventListener("click", function(){
     deleteAllLinks();
-    linkLocalStorage(); 
 }); 
 
 
 
-//Saves current storedLinks to local storage on exit/refresh 
-//TODO: Doesn't work as intended - doesn't call linkStorage() apparently since storage.clear() isn't happening
-// window.addEventListener("reload", function(){
-//     linkLocalStorage();
-// })
+//Saves current storedLinks to local storage on exit/refresh - saves memory doing it once at the end vs doing it on every button click. 
+//Makes sense to do it once at the end too since we're saving the storage when the user is finished for next time. 
+window.addEventListener("beforeunload", function(){
+    linkLocalStorage();
+})
 
-// window.addEventListener("close", function(){
-//     linkLocalStorage();
-// })
 
 //Saves link in input text field 
 function saveLink(){
@@ -55,7 +49,9 @@ function saveLink(){
 
 //Deletes most recent link from history - and updates storage
 function deleteLink(){
-    storedLinks.pop(); //TODO: Deletes most recent except for first entry for some reason 
+    //storedLinks.pop(); //TODO: Deletes most recent except for first entry for some reason 
+    console.log("popped: " + storedLinks.pop());
+    console.log("updated array: " + storedLinks); 
     printStoredLinks(); 
 }
 
@@ -87,24 +83,22 @@ function formatSavedLinks(){
 }   
 
 //Updates link history with links in storage. 
-function printStoredLinks(){
-    if(storedLinks.length != 0){
-        let listItems = "";
-        for(let i=0; i<storedLinks.length;i++){ 
-            listItems += `
+function printStoredLinks() {
+  let listItems = "";
+  for (let i = 0; i < storedLinks.length; i++) {
+    listItems += `
             <li>
                 <a id='saved-links' target='_blank' href='${storedLinks[i]}'> 
                  ${storedLinks[i]} 
                 </a>
             </li>`;
-            
-            // Does the same thing and is less intuitive to understand
-            // const li = document.createElement("li"); 
-            // li.textContent = storedLinks[i]; 
-            // storedLinksEl.append(li);
-        }
-        storedLinksEl.innerHTML = listItems;
-    }
+
+    // Does the same thing and is less intuitive to understand
+    // const li = document.createElement("li");
+    // li.textContent = storedLinks[i];
+    // storedLinksEl.append(li);
+  }
+  storedLinksEl.innerHTML = listItems;
 }
 
 
