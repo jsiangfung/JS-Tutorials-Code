@@ -13,8 +13,13 @@ let storedLinksEl = document.getElementById("saved-links");
 
 let storedLinks = [];
 
-//Restores links from local storage at start
-formatSavedLinks();
+//TODO: Null references to storedLink causing bugs. 
+
+//Restores links from local storage at start - if storedLinks had nothing saved storedLinks will be set to NULL so we have to reinitialize it to empty array
+if(formatSavedLinks() == null){
+  storedLinks = []; 
+}
+
 printStoredLinks();
 
 //Saves link to storage and updates history
@@ -22,7 +27,7 @@ inputBtn.addEventListener("click", function () {
   saveLink();
 });
 
-let tabs = [{ url: "https://keep.google.com/u/0/#home" }];
+let tabs = [{ url: "" }];
 
 //Adds the link in the current tab to storeLinks and updates history
 tabBtn.addEventListener("click", function () {
