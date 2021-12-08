@@ -1,6 +1,5 @@
 //Elements
 let linkAdr = document.getElementById("input-el");
-let text = document.getElementById("text");
 
 //Buttons
 let inputBtn = document.getElementById("save-input-btn");
@@ -13,18 +12,24 @@ let storedLinksEl = document.getElementById("saved-links");
 
 let storedLinks = [];
 
-//TODO: Null references to storedLink causing bugs. 
+//TODO: Null references to storedLink causing bugs.
 
 //Restores links from local storage at start - if storedLinks had nothing saved storedLinks will be set to NULL so we have to reinitialize it to empty array
-if(formatSavedLinks() == null){
-  storedLinks = []; 
-}
+formatSavedLinks();
+// if (storedLinks === null) {
+//   storedLinks = [];
+// } else{
+//   console.log("undefined: false");
+// }
 
 printStoredLinks();
 
 //Saves link to storage and updates history
 inputBtn.addEventListener("click", function () {
-  saveLink();
+  saveLink(); 
+  linkLocalStorage();
+  console.log(storedLinks); 
+  
 });
 
 let tabs = [{ url: "" }];
@@ -33,7 +38,9 @@ let tabs = [{ url: "" }];
 tabBtn.addEventListener("click", function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     storedLinks.push(tabs[0].url);
+    linkLocalStorage();
     printStoredLinks();
+    console.log(storedLinks); 
   });
 });
 
@@ -56,8 +63,11 @@ window.addEventListener("beforeunload", function () {
 //Saves link in input text field
 function saveLink() {
   let link = linkAdr.value;
-  storedLinks.push(link);
-  printStoredLinks();
+  if(link != ""){ 
+    storedLinks.push(link);
+    linkAdr.value = ""; 
+    printStoredLinks();
+  }
 }
 
 //Deletes most recent link from history - and updates storage
@@ -95,20 +105,19 @@ function formatSavedLinks() {
 //Updates link history with links in storage.
 function printStoredLinks() {
   let listItems = "";
-  if (storedLinks != null) {
-    for (let i = 0; i < storedLinks.length; i++) {
-      listItems += `
+  for (let i = 0; i < storedLinks.length; i++) {
+    listItems += `
             <li>
                 <a id='saved-links' target='_blank' href='${storedLinks[i]}'> 
                  ${storedLinks[i]} 
                 </a>
             </li>`;
 
-      // Does the same thing and is less intuitive to understand
-      // const li = document.createElement("li");
-      // li.textContent = storedLinks[i];
-      // storedLinksEl.append(li);
-    }
+    // Does the same thing and is less intuitive to understand
+    // const li = document.createElement("li");
+    // li.textContent = storedLinks[i];
+    // storedLinksEl.append(li);
   }
+
   storedLinksEl.innerHTML = listItems;
 }
